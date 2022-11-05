@@ -57,17 +57,38 @@ http://127.0.0.1:8000/api/v1/posts/
 ```
 {
     "count": 123,
-    "next": "http://api.example.org/accounts/?offset=400&limit=100",
-    "previous": "http://api.example.org/accounts/?offset=200&limit=100",
+    "next": "http://api.example.org/accounts/?offset=40&limit=10",
+    "previous": "http://api.example.org/accounts/?offset=20&limit=10",
     "results": [
         {
-            "id": 0,
-            "author": "string",
-            "text": "string",
-            "pub_date": "2021-10-14T20:41:29.648Z",
-            "image": "string",
-            "group": 0
+            "id": 1,
+            "author": "admin",
+            "text": "Первый пост админа",
+            "pub_date": "2022-11-01T23:28:35.860669Z",
+            "image": null,
+            "group": 1
         }
     ]
 }
 ```
+```
+http://127.0.0.1:8000/api/v1/posts/1/comments/1
+```
+```
+{
+    "id": 1,
+    "author": "admin",
+    "text": "Комментарий админа к 1му посту.",
+    "created": "2022-11-02T08:22:41.941046Z",
+    "post": 1
+}
+
+```
+```
+http://127.0.0.1:8000/api/v1/follow/
+```
+```
+{
+    "user": "admin"
+    "following": "user2"
+}
