@@ -11,6 +11,11 @@ from posts.models import Comment, Follow, Group, Post
 
 
 class PostViewSet(viewsets.ModelViewSet):
+    """
+    Объединяет логику для набора связанных представлений модели Post.
+    При GET-запросе списка объектов, указав параметры limit и offset,
+    выдача должна работать с пагинацией.
+    """
     permission_classes = [IsAuthorOrReadOnly, ]
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -22,11 +27,18 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    Объединяет логику для набора связанных представлений модели Group.
+    Представления работают только с безопасными запросами.
+    """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    """
+    Объединяет логику для набора связанных представлений модели Comment.
+    """
     permission_classes = [IsAuthorOrReadOnly, ]
     serializer_class = CommentSerializer
 
@@ -43,13 +55,14 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user, post=post)
 
 
-class ListCreateViewSet(mixins.ListModelMixin,
-                        mixins.CreateModelMixin,
-                        viewsets.GenericViewSet):
-    pass
-
-
-class FollowViewSet(viewsets.ModelViewSet):
+class FollowViewSet(mixins.ListModelMixin,
+                    mixins.CreateModelMixin,
+                    viewsets.GenericViewSet):
+    """
+    Объединяет логику для набора связанных представлений модели Follow.
+    Все допустимые запросы разрешены только аутент. пользователям.
+    Доступен поиск по подпискам по параметру search.
+    """
     permission_classes = [IsAuthenticated, ]
     queryset = Follow.objects.all()
     serializer_class = FollowSerializer

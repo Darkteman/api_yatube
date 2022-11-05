@@ -9,6 +9,10 @@ User = get_user_model()
 
 
 class PostSerializer(serializers.ModelSerializer):
+    """
+    Преобразует информацию для работы через API по модели Post.
+    Из JSON в экземпляр класса модели, и наоборот.
+    """
     author = SlugRelatedField(slug_field='username', read_only=True)
 
     class Meta:
@@ -17,12 +21,18 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
+    """
+    Преобразует информацию для работы через API по модели Group.
+    """
     class Meta:
         fields = ('id', 'title', 'slug', 'description')
         model = Group
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    """
+    Преобразует информацию для работы через API по модели Comment.
+    """
     author = SlugRelatedField(slug_field='username', read_only=True)
 
     class Meta:
@@ -32,6 +42,10 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class FollowSerializer(serializers.ModelSerializer):
+    """
+    Преобразует информацию для работы через API по модели Follow.
+    Связь полей модели должна быть уникальна.
+    """
     user = SlugRelatedField(slug_field='username',
                             read_only=True,
                             default=serializers.CurrentUserDefault())
